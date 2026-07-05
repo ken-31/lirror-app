@@ -51,15 +51,27 @@ body {
   min-height: 100vh;
 }
 
-/* ================= ホームのフルスクリーン背景（魔法の絵本の入口） ================= */
-.home-bg {
+/* ================= 各画面のフルスクリーン背景（魔法の絵本の世界） ================= */
+.screen-bg {
   position: fixed;
   inset: 0;
   z-index: 0;
-  background: url("/assets/home-hero.jpg") center top / cover no-repeat;
+  background: center top / cover no-repeat;
+}
+.screen-bg.home {
+  background-image: url("/assets/bg-home.png");
+}
+.screen-bg.analysis {
+  background-image: url("/assets/bg-analysis.png");
+}
+.screen-bg.records {
+  background-image: url("/assets/bg-records.png");
+}
+.screen-bg.you {
+  background-image: url("/assets/bg-you.png");
 }
 /* 下へ行くほど白く霞ませ、UIと下タブの可読性を守りつつ視線を下へ誘導する */
-.home-bg::after {
+.screen-bg::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -69,6 +81,17 @@ body {
     rgba(253, 241, 246, 0.28) 58%,
     rgba(253, 243, 247, 0.72) 86%,
     rgba(253, 244, 247, 0.88) 100%
+  );
+}
+/* カードが多く載る画面は、全体をやや白く霞ませて文字を読みやすく */
+.screen-bg.analysis::after,
+.screen-bg.records::after,
+.screen-bg.you::after {
+  background: linear-gradient(
+    rgba(253, 241, 246, 0.5) 0%,
+    rgba(253, 241, 246, 0.42) 40%,
+    rgba(253, 243, 247, 0.66) 82%,
+    rgba(253, 244, 247, 0.82) 100%
   );
 }
 

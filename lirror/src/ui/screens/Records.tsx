@@ -22,7 +22,6 @@ export function Records() {
         <div className="card-title">🗓️ 恋愛タイムライン</div>
         {events.length === 0 ? (
           <div className="empty">
-            <img src="/assets/cat.png" alt="" />
             <p>
               まだ記録がありません。
               <br />

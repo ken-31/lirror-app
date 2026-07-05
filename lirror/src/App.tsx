@@ -19,8 +19,8 @@ export default function App() {
   const [tab, setTab] = useState<Tab>("home");
   return (
     <StoreProvider>
-      {/* ホームはイラストが画面全体を満たす（花びら・光はその上を舞う） */}
-      {tab === "home" && <div className="home-bg" aria-hidden />}
+      {/* 各画面のイラスト背景（花びら・光はその上を舞う） */}
+      <div className={`screen-bg ${tab}`} aria-hidden />
       <WorldBg />
       <div className="shell">
         {/* パソコン（広い画面）ではサイドバー */}

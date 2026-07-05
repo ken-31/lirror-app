@@ -202,7 +202,15 @@ export function AnalysisScreen() {
 
       {sub === "balance" && (
         <div className="cols">
-          <div className="card">
+          <div
+            className="card"
+            style={{
+              backgroundImage:
+                "linear-gradient(rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.82)), url(/assets/bg-balance.png)",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          >
             <div className="card-title">⚖️ 吹き出し天秤</div>
             <Balance youRatio={a.score} youName={analysis.you} partnerName={analysis.partner} />
             <div
