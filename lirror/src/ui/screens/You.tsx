@@ -4,6 +4,7 @@ import { MBTI_LIST, SERIES, CHARAS, loveNo, loadProfiles, type Profile, type Ser
 import { KOTOBA_TYPES, QUESTIONS, judge, type KotobaType } from "../../diagnosis/hoshiiKotoba";
 import { MOODS, buildJikkyo, generateOmamori, type Mood } from "../../diagnosis/omamori";
 import { recentTempShare } from "../helpers";
+import { Emj } from "../components/Emj";
 
 type View = "menu" | "profile" | "quiz" | "omamori" | "settings";
 
@@ -11,7 +12,7 @@ export function You() {
   const [view, setView] = useState<View>("menu");
   return (
     <div className="fade-in">
-      <h2 className="screen-title">🌸 あなた</h2>
+      <h2 className="screen-title"><Emj name="flowers" /> あなた</h2>
       {view === "menu" && <Menu go={setView} />}
       {view === "profile" && <LoveProfile back={() => setView("menu")} />}
       {view === "quiz" && <Quiz back={() => setView("menu")} />}
@@ -43,7 +44,7 @@ function Menu({ go }: { go: (v: View) => void }) {
   return (
     <div className="narrow">
       <div className="card" style={{ background: "linear-gradient(135deg, #fdf0f5, #f3effc)" }}>
-        <div className="card-title">🧠 わたしの恋愛の型（カルテ）</div>
+        <div className="card-title"><Emj name="brain" /> わたしの恋愛の型（カルテ）</div>
         <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
           {profile.mbti ? <span className="tag">{profile.mbti}</span> : <span className="tag" style={{ opacity: 0.5 }}>MBTI 未設定</span>}
           {series && chara ? (
@@ -60,24 +61,24 @@ function Menu({ go }: { go: (v: View) => void }) {
       </div>
       <div className="card" style={{ padding: "6px 16px" }}>
         <button className="list-item" onClick={() => go("profile")}>
-          🧠 恋愛プロフィール <span style={{ fontSize: 11, color: "var(--ink-soft)" }}>MBTI × ラブタイプ64</span>
+          <Emj name="brain" /> 恋愛プロフィール <span style={{ fontSize: 11, color: "var(--ink-soft)" }}>MBTI × ラブタイプ64</span>
           <span className="chev">›</span>
         </button>
         <button className="list-item" onClick={() => go("quiz")}>
-          🫧 「ほしい言葉」タイプ診断
+          <Emj name="bubbles" /> 「ほしい言葉」タイプ診断
           <span className="chev">›</span>
         </button>
         <button className="list-item" onClick={() => go("omamori")}>
-          🍀 今日のお守り
+          <Emj name="clover" /> 今日のお守り
           <span className="chev">›</span>
         </button>
         <button className="list-item" onClick={() => go("settings")}>
-          ⚙️ 設定・プライバシー
+          <Emj name="gear" /> 設定・プライバシー
           <span className="chev">›</span>
         </button>
       </div>
       <div className="privacy">
-        🪞 このアプリは、相手を解読する道具ではなく、<b>自分を客観視する鏡</b>です。診断はぜんぶ自己申告 ──
+        <Emj name="mirror" /> このアプリは、相手を解読する道具ではなく、<b>自分を客観視する鏡</b>です。診断はぜんぶ自己申告 ──
         自分がどんな言葉で安心するかは、あなただけが知っているから。
       </div>
     </div>
@@ -342,7 +343,7 @@ function OmamoriView({ back, goQuiz }: { back: () => void; goQuiz: () => void })
     <>
       <BackBar back={back} title="今日のお守り" />
       <div className="card narrow">
-        <div className="card-title">🌤️ 今日の気持ち診断 ── いまのあなたに近いのは？</div>
+        <div className="card-title"><Emj name="sun" /> 今日の気持ち診断 ── いまのあなたに近いのは？</div>
         <div className="select-grid cols2">
           {MOODS.map((m) => (
             <button
@@ -354,7 +355,7 @@ function OmamoriView({ back, goQuiz }: { back: () => void; goQuiz: () => void })
                 setTodayMood(m.id);
               }}
             >
-              {m.emoji} {m.label}
+              <Emj name={m.icon} /> {m.label}
             </button>
           ))}
         </div>
@@ -364,7 +365,7 @@ function OmamoriView({ back, goQuiz }: { back: () => void; goQuiz: () => void })
             : "LINEを読み込むと、お守りに「今日の実況」も織り込まれます"}
         </div>
         <button className="btn btn-main" style={{ marginTop: 12 }} disabled={!mood} onClick={() => mood && generate(mood)}>
-          🍀 お守りを受け取る
+          <Emj name="clover" /> お守りを受け取る
         </button>
       </div>
     </>
@@ -379,7 +380,7 @@ function Settings({ back }: { back: () => void }) {
       <BackBar back={back} title="設定・プライバシー" />
       <div className="narrow">
       <div className="card">
-        <div className="card-title">💗 付き合った日（任意）</div>
+        <div className="card-title"><Emj name="heart" /> 付き合った日（任意）</div>
         <input
           type="date"
           value={profile.anniversary ?? ""}
@@ -389,7 +390,7 @@ function Settings({ back }: { back: () => void }) {
         <div className="note" style={{ marginTop: 6 }}>ホームに「付き合ってN日目」を表示します</div>
       </div>
       <div className="privacy" style={{ marginBottom: 14 }}>
-        🔒 <b>プライバシー・ファースト</b>
+        <Emj name="lock" /> <b>プライバシー・ファースト</b>
         <br />
         ・分析はすべて端末内で完結し、ネットワーク送信はゼロです
         <br />
@@ -404,7 +405,7 @@ function Settings({ back }: { back: () => void }) {
           if (confirm("すべてのデータ（分析結果・プロフィール・お守り）を端末から削除しますか？")) resetAll();
         }}
       >
-        🗑️ すべてのデータを削除する
+        <Emj name="trash" /> すべてのデータを削除する
       </button>
       </div>
     </>

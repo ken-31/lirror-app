@@ -1,9 +1,10 @@
 import type { Analysis, Weather } from "../core/analyze";
+import type { EmjName } from "./components/Emj";
 
-export const WEATHER_INFO: Record<Weather, { emoji: string; label: string }> = {
-  sunny: { emoji: "☀️", label: "晴れ" },
-  cloudy: { emoji: "⛅", label: "くもり" },
-  rainy: { emoji: "🌧️", label: "雨のち晴れ待ち" },
+export const WEATHER_INFO: Record<Weather, { emoji: string; icon: EmjName; label: string }> = {
+  sunny: { emoji: "☀️", icon: "sun", label: "晴れ" },
+  cloudy: { emoji: "⛅", icon: "cloud", label: "くもり" },
+  rainy: { emoji: "🌧️", icon: "rain", label: "雨のち晴れ待ち" },
 };
 
 export function mdLabel(date: string): string {

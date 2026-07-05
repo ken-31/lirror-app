@@ -1,6 +1,7 @@
 import { useStore, todayStr } from "../../store/store";
 import { WEATHER_INFO, recentTempShare, tempShareText, aiHitokoto, daysBetween, mdLabel } from "../helpers";
 import { TwoLineChart } from "../components/charts";
+import { Emj } from "../components/Emj";
 import type { Tab } from "../../App";
 
 export function Home({ go }: { go: (t: Tab) => void }) {
@@ -35,7 +36,7 @@ export function Home({ go }: { go: (t: Tab) => void }) {
                     display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, zIndex: 1,
                   }}
                 >
-                  🌷
+                  <Emj name="flowers" size={20} />
                 </span>
                 <span
                   style={{
@@ -43,7 +44,7 @@ export function Home({ go }: { go: (t: Tab) => void }) {
                     display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, marginLeft: -10,
                   }}
                 >
-                  🌙
+                  <Emj name="moon" size={20} />
                 </span>
               </div>
               <div>
@@ -52,16 +53,16 @@ export function Home({ go }: { go: (t: Tab) => void }) {
                 </div>
                 <div style={{ fontSize: 12, color: "var(--ink-soft)" }}>
                   {profile.anniversary
-                    ? `付き合って ${daysBetween(profile.anniversary, today)} 日目 💗`
+                    ? <>付き合って {daysBetween(profile.anniversary, today)} 日目 <Emj name="heart" /></>
                     : `トークをはじめて ${daysBetween(analysis.firstDate, today)} 日目`}
                 </div>
               </div>
-              <span style={{ marginLeft: "auto", fontSize: 20 }}>💗</span>
+              <span style={{ marginLeft: "auto", display: "flex" }}><Emj name="heart" size={20} /></span>
             </div>
 
             {/* 今日のふたり＝天気 */}
             <div className="card weather-card">
-              <div className="weather-emoji">{WEATHER_INFO[analysis.weather].emoji}</div>
+              <div className="weather-emoji"><Emj name={WEATHER_INFO[analysis.weather].icon} size={44} /></div>
               <div>
                 <div className="card-title" style={{ marginBottom: 4 }}>今日のふたり</div>
                 <div style={{ fontWeight: 700, fontSize: 15 }}>{WEATHER_INFO[analysis.weather].label}</div>
@@ -71,7 +72,7 @@ export function Home({ go }: { go: (t: Tab) => void }) {
 
             <div className="grid2 grid-wrap">
               <div className="card card-link" onClick={() => go("analysis")}>
-                <div className="card-title">🌡️ 温度差</div>
+                <div className="card-title"><Emj name="thermo" /> 温度差</div>
                 <div className="big-num" style={{ color: "var(--rose-strong)" }}>
                   {Math.round(recentTempShare(analysis) * 100)}
                   <small>%</small>
@@ -85,7 +86,7 @@ export function Home({ go }: { go: (t: Tab) => void }) {
               </div>
               <div style={{ display: "grid", gap: 12 }}>
                 <div className="card card-link" onClick={() => go("analysis")}>
-                  <div className="card-title">⚖️ 吹き出し天秤</div>
+                  <div className="card-title"><Emj name="scales" /> 吹き出し天秤</div>
                   <div style={{ fontWeight: 700, fontSize: 14 }}>
                     {analysis.asymmetry.score > 0.55 ? "ややあなた多め" : analysis.asymmetry.score < 0.45 ? "やや相手多め" : "いいバランス"}
                   </div>
@@ -94,7 +95,7 @@ export function Home({ go }: { go: (t: Tab) => void }) {
                   </div>
                 </div>
                 <div className="card card-link" onClick={() => go("analysis")}>
-                  <div className="card-title">⏱️ 返信速度</div>
+                  <div className="card-title"><Emj name="clock" /> 返信速度</div>
                   <div className="big-num" style={{ fontSize: 24, color: "var(--rose-strong)" }}>
                     {analysis.rhythm.avgReplyMin[1]}
                     <small>分</small>
@@ -108,7 +109,7 @@ export function Home({ go }: { go: (t: Tab) => void }) {
           <div>
             {/* 今日のお守り入口 */}
             <div className="card card-link" onClick={() => go("you")} style={{ background: "linear-gradient(135deg, #f3effc, #fdeef4)" }}>
-              <div className="card-title">🍀 今日のお守り</div>
+              <div className="card-title"><Emj name="clover" /> 今日のお守り</div>
               {todayOmamori ? (
                 <div style={{ fontSize: 14, fontWeight: 500, lineHeight: 1.8 }}>{todayOmamori.message}</div>
               ) : (
@@ -119,7 +120,7 @@ export function Home({ go }: { go: (t: Tab) => void }) {
             </div>
 
             <div className="card">
-              <div className="card-title">🐈 白猫のひとこと</div>
+              <div className="card-title"><Emj name="cat" /> 白猫のひとこと</div>
               <div className="ai-row">
                 <img className="ai-avatar" src="/assets/cat.png" alt="案内役の白猫" />
                 <div className="ai-bubble">{aiHitokoto(analysis)}</div>

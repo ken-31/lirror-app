@@ -321,6 +321,19 @@ h1, h2, h3 {
   margin-bottom: 14px;
 }
 
+/* ---------- 独自絵文字アイコン（OS絵文字の置き換え） ---------- */
+.emj {
+  display: inline-block;
+  width: 1.2em;
+  height: 1.2em;
+  object-fit: contain;
+  vertical-align: -0.22em;
+}
+.ticon .emj {
+  width: 20px;
+  height: 20px;
+}
+
 /* ---------- ボタン（花とガラスの統一デザイン） ---------- */
 .btn {
   position: relative;
@@ -825,12 +838,12 @@ h1, h2, h3 {
   padding: 8px 0 14px;
 }
 .tl-item::before {
-  content: "🌸";
+  content: "";
   position: absolute;
   left: -25px;
   top: 10px;
   font-size: 11px;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.9) url("/assets/emoji/flowers.png") center / 11px 11px no-repeat;
   border-radius: 50%;
   width: 17px;
   height: 17px;

@@ -1,10 +1,11 @@
-import { useRef, useState } from "react";
+import { useRef, useState, type ReactNode } from "react";
 import { parseLineTalk, pickTopTwo, type ParsedTalk } from "../../parser/lineParser";
 import { analyze } from "../../core/analyze";
 import { generateSampleTalk, SAMPLE_YOU } from "../../data/sample";
 import { useStore } from "../../store/store";
 import { TwoLineChart, Donut, donutColor, Balance, HourBands, RatioBar } from "../components/charts";
 import { WEATHER_INFO, mdLabel, balanceText, aiHitokoto } from "../helpers";
+import { Emj } from "../components/Emj";
 
 type SubTab = "temp" | "balance" | "topic" | "rhythm";
 type Period = 7 | 30 | 90;
@@ -41,10 +42,10 @@ export function AnalysisScreen() {
   const mirrorOverlay = mirroring && (
     <div className="mirror-loading">
       <div className="mirror-ring">
-        <span>🪞</span>
+        <span><Emj name="mirror" size={36} /></span>
       </div>
       <div className="ml-text">鏡に映しています…</div>
-      <div className="ml-sub">🔒 トークは端末の外に出ません</div>
+      <div className="ml-sub"><Emj name="lock" /> トークは端末の外に出ません</div>
     </div>
   );
 
@@ -59,7 +60,7 @@ export function AnalysisScreen() {
     return (
       <div className="fade-in">
         {mirrorOverlay}
-        <h2 className="screen-title">💬 LINE分析</h2>
+        <h2 className="screen-title"><Emj name="chat" /> LINE分析</h2>
 
         {pendingTalk ? (
           <div className="card narrow" style={{ textAlign: "center" }}>
@@ -69,7 +70,7 @@ export function AnalysisScreen() {
               {pendingTalk.participants.map((p) => (
                 <button key={p} className="select-cell" style={{ padding: 14 }}
                   onClick={() => { setAnalysis(analyze(pendingTalk, p)); setPendingTalk(null); }}>
-                  🌷 {p}
+                  <Emj name="flowers" /> {p}
                 </button>
               ))}
             </div>
@@ -89,7 +90,7 @@ export function AnalysisScreen() {
                 if (f) handleFile(f);
               }}
             >
-              <div style={{ fontSize: 36 }}>📄</div>
+              <div><Emj name="doc" size={36} /></div>
               <div style={{ fontWeight: 700, margin: "6px 0" }}>トーク履歴（.txt）をここにドロップ</div>
               <div className="note">またはタップしてファイルを選択</div>
               <input
@@ -107,18 +108,18 @@ export function AnalysisScreen() {
             )}
             <div style={{ margin: "14px 0" }}>
               <button className="btn btn-sub" onClick={() => handleText(generateSampleTalk(), SAMPLE_YOU)}>
-                🌸 サンプルデータで試してみる
+                <Emj name="flowers" /> サンプルデータで試してみる
               </button>
             </div>
             </div>
             <div>
             <div className="privacy">
-              🔒 <b>あなたのトークは端末から出ません。</b>
+              <Emj name="lock" /> <b>あなたのトークは端末から出ません。</b>
               <br />
               分析はすべてこの端末の中だけで行われ、ネットワークへの送信はゼロです。保存されるのは集計結果だけで、トーク本文は保持しません。
             </div>
             <div className="card" style={{ marginTop: 14 }}>
-              <div className="card-title">📱 トーク履歴の保存方法</div>
+              <div className="card-title"><Emj name="phone" /> トーク履歴の保存方法</div>
               <ol style={{ fontSize: 12.5, color: "var(--ink-soft)", lineHeight: 2, margin: 0, paddingLeft: 18 }}>
                 <li>LINEで相手とのトークを開く</li>
                 <li>右上メニュー → その他（設定）</li>
@@ -138,16 +139,16 @@ export function AnalysisScreen() {
 
   return (
     <div className="fade-in">
-      <h2 className="screen-title">💬 LINE分析</h2>
+      <h2 className="screen-title"><Emj name="chat" /> LINE分析</h2>
       <div style={{ textAlign: "center", marginBottom: 14 }}>
         <div className="segment">
           {(
             [
-              ["temp", "🌡️ 温度"],
-              ["balance", "⚖️ 天秤"],
-              ["topic", "🗺️ 話題"],
-              ["rhythm", "⏱️ リズム"],
-            ] as [SubTab, string][]
+              ["temp", <><Emj name="thermo" /> 温度</>],
+              ["balance", <><Emj name="scales" /> 天秤</>],
+              ["topic", <><Emj name="map" /> 話題</>],
+              ["rhythm", <><Emj name="clock" /> リズム</>],
+            ] as [SubTab, ReactNode][]
           ).map(([id, label]) => (
             <button key={id} className={sub === id ? "on" : ""} onClick={() => setSub(id)}>
               {label}
@@ -159,7 +160,7 @@ export function AnalysisScreen() {
       {sub === "temp" && (
         <div className="cols">
           <div className="card">
-            <div className="card-title">🌡️ 温度差グラフ</div>
+            <div className="card-title"><Emj name="thermo" /> 温度差グラフ</div>
             <div style={{ textAlign: "center", marginBottom: 8 }}>
               <div className="segment">
                 {([7, 30, 90] as Period[]).map((p) => (
@@ -183,14 +184,14 @@ export function AnalysisScreen() {
           </div>
           <div>
             <div className="card weather-card">
-              <div className="weather-emoji">{WEATHER_INFO[analysis.weather].emoji}</div>
+              <div className="weather-emoji"><Emj name={WEATHER_INFO[analysis.weather].icon} size={44} /></div>
               <div>
                 <div style={{ fontWeight: 700 }}>{WEATHER_INFO[analysis.weather].label}</div>
                 <div style={{ fontSize: 12.5, color: "var(--ink-soft)", lineHeight: 1.7 }}>{analysis.weatherReason}</div>
               </div>
             </div>
             <div className="card">
-              <div className="card-title">🐈 白猫のひとこと</div>
+              <div className="card-title"><Emj name="cat" /> 白猫のひとこと</div>
               <div className="ai-row">
                 <img className="ai-avatar" src="/assets/cat.png" alt="案内役の白猫" />
                 <div className="ai-bubble">{aiHitokoto(analysis)}</div>
@@ -211,7 +212,7 @@ export function AnalysisScreen() {
               backgroundPosition: "center",
             }}
           >
-            <div className="card-title">⚖️ 吹き出し天秤</div>
+            <div className="card-title"><Emj name="scales" /> 吹き出し天秤</div>
             <Balance youRatio={a.score} youName={analysis.you} partnerName={analysis.partner} />
             <div
               style={{ background: "var(--rose-bg)", borderRadius: 14, padding: "12px 14px", fontSize: 13, lineHeight: 1.8 }}
@@ -245,7 +246,7 @@ export function AnalysisScreen() {
       {sub === "topic" && (
         <div className="cols">
           <div className="card">
-            <div className="card-title">🗺️ 話題マップ</div>
+            <div className="card-title"><Emj name="map" /> 話題マップ</div>
             <Donut slices={analysis.topics} centerLabel="全期間の話題" />
             <div style={{ marginTop: 10 }}>
               {analysis.topics.map((t, i) => {
@@ -264,7 +265,7 @@ export function AnalysisScreen() {
             </div>
           </div>
           <div className="card">
-            <div className="card-title">💬 メッセージの機能分類</div>
+            <div className="card-title"><Emj name="chat" /> メッセージの機能分類</div>
             {analysis.functions.map((f) => (
               <div key={f.name} style={{ marginBottom: 10 }}>
                 <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, marginBottom: 4 }}>
@@ -291,7 +292,9 @@ export function AnalysisScreen() {
           <div className="grid2 grid-wrap">
             {[0, 1].map((i) => (
               <div className="card" key={i}>
-                <div className="card-title">{i === 0 ? `🌷 ${analysis.you}` : `🌙 ${analysis.partner}`}</div>
+                <div className="card-title">
+                  {i === 0 ? <><Emj name="flowers" /> {analysis.you}</> : <><Emj name="moon" /> {analysis.partner}</>}
+                </div>
                 <div className="big-num" style={{ fontSize: 26, color: i === 0 ? "var(--rose-strong)" : "var(--lavender-strong)" }}>
                   {analysis.rhythm.avgReplyMin[i]}
                   <small>分</small>
@@ -304,11 +307,11 @@ export function AnalysisScreen() {
             ))}
           </div>
           <div className="card">
-            <div className="card-title">🕐 時間帯別の活動（重なり帯）</div>
+            <div className="card-title"><Emj name="clock" /> 時間帯別の活動（重なり帯）</div>
             <HourBands you={analysis.rhythm.activeHours.you} partner={analysis.rhythm.activeHours.partner} />
             {analysis.rhythm.overlap ? (
               <div style={{ background: "var(--lavender-bg)", borderRadius: 12, padding: "10px 14px", fontSize: 13 }}>
-                🌙 ふたりが重なる時間帯：<b>{analysis.rhythm.overlap[0]}時 〜 {analysis.rhythm.overlap[1]}時</b> ごろ
+                <Emj name="moon" /> ふたりが重なる時間帯：<b>{analysis.rhythm.overlap[0]}時 〜 {analysis.rhythm.overlap[1]}時</b> ごろ
               </div>
             ) : (
               <div className="note">はっきり重なる時間帯は見つかりませんでした</div>

@@ -4,14 +4,15 @@
 
 import type { KotobaType } from "./hoshiiKotoba";
 import type { Weather } from "../core/analyze";
+import type { EmjName } from "../ui/components/Emj";
 
 export type Mood = "happy" | "uneasy" | "tired" | "calm";
 
-export const MOODS: { id: Mood; emoji: string; label: string }[] = [
-  { id: "happy", emoji: "🌸", label: "いい感じ" },
-  { id: "uneasy", emoji: "🌫", label: "すこし不安" },
-  { id: "tired", emoji: "💤", label: "つかれ気味" },
-  { id: "calm", emoji: "🍵", label: "おだやか" },
+export const MOODS: { id: Mood; emoji: string; icon: EmjName; label: string }[] = [
+  { id: "happy", emoji: "🌸", icon: "sakura", label: "いい感じ" },
+  { id: "uneasy", emoji: "🌫", icon: "fog", label: "すこし不安" },
+  { id: "tired", emoji: "💤", icon: "zzz", label: "つかれ気味" },
+  { id: "calm", emoji: "🍵", icon: "tea", label: "おだやか" },
 ];
 
 // 実況（観測ベースの一文）── 分析結果から生成。断定・感情の読み取りはしない。

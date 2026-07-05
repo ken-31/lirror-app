@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useStore } from "../../store/store";
 import { KOTOBA_TYPES } from "../../diagnosis/hoshiiKotoba";
 import { mdLabel } from "../helpers";
+import { Emj } from "../components/Emj";
 import type { Omamori } from "../../diagnosis/omamori";
 
 export function Records() {
@@ -15,11 +16,11 @@ export function Records() {
 
   return (
     <div className="fade-in">
-      <h2 className="screen-title">📔 ふたりの記録</h2>
+      <h2 className="screen-title"><Emj name="book" /> ふたりの記録</h2>
 
       <div className="cols">
       <div className="card">
-        <div className="card-title">🗓️ 恋愛タイムライン</div>
+        <div className="card-title"><Emj name="calendar" /> 恋愛タイムライン</div>
         {events.length === 0 ? (
           <div className="empty">
             <p>
@@ -96,7 +97,7 @@ export function Records() {
       </div>
 
       <div className="card">
-        <div className="card-title">🍀 お守りコレクション</div>
+        <div className="card-title"><Emj name="clover" /> お守りコレクション</div>
         {omamoris.length === 0 ? (
           <div className="note">まだお守りがありません。「あなた」タブで今日の一枚を受け取ろう🌙</div>
         ) : (

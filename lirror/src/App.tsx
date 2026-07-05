@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { StoreProvider } from "./store/store";
 import { WorldBg } from "./ui/components/WorldBg";
+import { Emj, type EmjName } from "./ui/components/Emj";
 import { Home } from "./ui/screens/Home";
 import { AnalysisScreen } from "./ui/screens/AnalysisScreen";
 import { Records } from "./ui/screens/Records";
@@ -8,11 +9,11 @@ import { You } from "./ui/screens/You";
 
 export type Tab = "home" | "analysis" | "records" | "you";
 
-const TABS: { id: Tab; icon: string; label: string }[] = [
-  { id: "home", icon: "🏠", label: "ホーム" },
-  { id: "analysis", icon: "📊", label: "分析" },
-  { id: "records", icon: "📔", label: "ふたりの記録" },
-  { id: "you", icon: "🌸", label: "あなた" },
+const TABS: { id: Tab; icon: EmjName; label: string }[] = [
+  { id: "home", icon: "home", label: "ホーム" },
+  { id: "analysis", icon: "chart", label: "分析" },
+  { id: "records", icon: "book", label: "ふたりの記録" },
+  { id: "you", icon: "flowers", label: "あなた" },
 ];
 
 export default function App() {
@@ -31,12 +32,12 @@ export default function App() {
           </div>
           {TABS.map((t) => (
             <button key={t.id} className={tab === t.id ? "on" : ""} onClick={() => setTab(t.id)}>
-              <span className="ticon">{t.icon}</span>
+              <span className="ticon"><Emj name={t.icon} /></span>
               {t.label}
             </button>
           ))}
           <div className="side-foot">
-            🔒 分析はぜんぶ端末の中。
+            <Emj name="lock" /> 分析はぜんぶ端末の中。
             <br />
             トークは外に出ません。
           </div>
@@ -54,7 +55,7 @@ export default function App() {
       <nav className="tabbar">
         {TABS.map((t) => (
           <button key={t.id} className={tab === t.id ? "on" : ""} onClick={() => setTab(t.id)}>
-            <span className="ticon">{t.icon}</span>
+            <span className="ticon"><Emj name={t.icon} /></span>
             {t.label}
           </button>
         ))}
